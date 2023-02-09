@@ -6,13 +6,16 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
+
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.MoveIntake;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,9 +28,12 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+
+  private static DigitalInput topLimitSwitch;
   private static Intake intake;
   private static Button intakeButton;
   private static Joystick joy;
+  //private static 
   
   
 
@@ -35,12 +41,20 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    intake = new Intake(Constants.INTAKE_MOTOR_ID);
-  
     joy = new Joystick(0);
+    intake = new Intake(Constants.INTAKE_MOTOR_ID);
+    intakeButton = new JoystickButton(joy,2);
+  
+    
+    topLimitSwitch = new DigitalInput(0);
+    
     
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  private Button JoystickButton(Joystick joy2, int i) {
+    return null;
   }
 
   /**
@@ -67,5 +81,9 @@ public class RobotContainer {
   }
   public static Joystick getJoystick(){
     return joy;
+  }
+  public static boolean getLimitSwitch(){
+    return topLimitSwitch.get();
+    
   }
 }
